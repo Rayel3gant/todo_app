@@ -10,4 +10,5 @@ export interface StateType {
 
 export type ActionType =
   | { type: "ADD_TODO"; payload: TodoType }
-  | { type: "REMOVE_TODO"; payload: number };
+  | { type: "REMOVE_TODO"; id: number }
+  | { type: "UPDATE_TODO_STATUS"; payload: TodoType };
