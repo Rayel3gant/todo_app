@@ -1,17 +1,12 @@
 "use client";
 import React, { createContext, ReactNode, useReducer } from "react";
-import { ActionType, StateType, TodoType } from "@/lib/types";
+import { ActionType, StateType } from "@/lib/types";
 
 function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case "ADD_TODO": {
-      const newTodo: TodoType = {
-        id: Date.now(),
-        text: action.payload.text,
-        completed: false,
-      };
       return {
-        todos: [...state.todos, newTodo],
+        todos: [...state.todos, action.payload],
       };
     }
 
