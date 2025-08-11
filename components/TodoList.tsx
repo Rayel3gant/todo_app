@@ -1,9 +1,11 @@
-import { useTodoContext } from "@/hooks/useTodoContext";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { TodoType } from "@/lib/types";
 import React from "react";
 
 const TodoList = () => {
-  const { state, dispatch } = useTodoContext();
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos);
   const deleteTodoHandler = (id: number) => {
     dispatch({
       type: "REMOVE_TODO",
@@ -24,11 +26,11 @@ const TodoList = () => {
 
   return (
     <div className="w-11/12 mx-auto mt-6 ">
-      {state.todos.length === 0 ? (
+      {todos.length === 0 ? (
         <div>No todos created</div>
       ) : (
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 lg:gap-y-8">
-          {state.todos.map((todo) => (
+          {todos.map((todo) => (
             <div
               key={todo.id}
               className=" w-11/12 mx-auto border-1 border-gray-600 py-4 px-2 rounded-sm"

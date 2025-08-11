@@ -1,11 +1,11 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import TodoList from "@/components/TodoList";
-import { useTodoContext } from "@/hooks/useTodoContext";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import React, { useState } from "react";
 
 const Page = () => {
-  const { dispatch } = useTodoContext();
+  const dispatch = useAppDispatch();
   const [title, setTitle] = useState<string>("");
   const createTodoHandler = () => {
     if (title.length) {
