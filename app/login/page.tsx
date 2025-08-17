@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { loginFormSchema } from "@/formSchemas/form";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/actions/auth";
+import { useUser } from "@/lib/context/userContext";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -28,10 +29,12 @@ const Login = () => {
     },
   });
   const router = useRouter();
+  const { setUserId } = useUser();
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     const res = await loginAction(values);
     if (res.response.token) {
+      setUserId(res.response.id);
       router.push("/todos");
     }
   };
