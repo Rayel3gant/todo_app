@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  todos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Todo",
+    },
+  ],
 });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

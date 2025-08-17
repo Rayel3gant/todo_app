@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginFormSchema } from "@/formSchemas/form";
-import { loginAction } from "@/actions/login";
 import { useRouter } from "next/navigation";
+import { loginAction } from "@/actions/auth";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginFormSchema>>({

@@ -5,15 +5,14 @@ const todoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  },
   status: {
     type: String,
-    required: true,
     enum: ["Completed", "Pending"],
     default: "Pending",
   },
+  date:{
+    type:Date
+  }
 });
 
 export const Todo = mongoose.models.Todo || mongoose.model("Todo", todoSchema);
