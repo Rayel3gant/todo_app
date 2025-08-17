@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signupFormSchema } from "@/formSchemas/form";
+import { signupAction } from "@/actions/signup";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const form = useForm<z.infer<typeof signupFormSchema>>({
@@ -26,10 +28,14 @@ const Signup = () => {
       email: "",
     },
   });
+  const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof signupFormSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
+    const res = await signupAction(values);
+    if (res.status === 201) {
+      router.push("/login");
+    }
+  };
   return (
     <div className="w-11/12 md:w-3/4 lg:w-[60%] mx-auto mt-6 lg:my-12 p-4 md:p-8 lg:p-12 rounded-md shadow-sm ">
       <div className="text-black font-bold text-lg mg:text-2xl lg:text-5xl">

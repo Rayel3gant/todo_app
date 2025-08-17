@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  token: {
+    type: String,
+    default: "",
+  },
 });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

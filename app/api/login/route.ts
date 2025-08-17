@@ -29,17 +29,31 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     if (passwordCheck) {
       const token = jwt.sign(
         { id: userDetails._id, email: userDetails.email },
-         process.env.JWT_SECRET!,
+        process.env.JWT_SECRET!,
         { expiresIn: "1h" }
       );
 
+      await User.findByIdAndUpdate(
+        userDetails._id,
+        {
+          token: token,
+        },
+        { new: true }
+      );
+
+      const response = {
+        token,
+        username: userDetails.username,
+        id: userDetails._id,
+      };
+
       return NextResponse.json(
-        { message: "Login successful", token },
+        { message: "Login successful", response },
         { status: 200 }
       );
     } else {
       return NextResponse.json(
-        { error: "incorrect password" },
+        { error: "incorrect password", status: 400 },
         { status: 400 }
       );
     }

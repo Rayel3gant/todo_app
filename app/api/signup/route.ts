@@ -3,7 +3,6 @@ import { signupType } from "@/lib/types";
 import { User } from "@/schemas/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 export const POST = async (request: NextRequest, response: NextResponse) => {
   try {
@@ -31,7 +30,7 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     });
 
     return NextResponse.json(
-      { message: "User registered successfully" },
+      { message: "User registered successfully" , status:201 },
       { status: 201 }
     );
   } catch (error) {

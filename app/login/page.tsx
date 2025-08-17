@@ -16,32 +16,43 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginFormSchema } from "@/formSchemas/form";
+import { loginAction } from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
+  const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    const res = await loginAction(values);
+    if (res.response.token) {
+      router.push("/todos");
+    }
+  };
   return (
     <div className="w-11/12 md:w-3/4 lg:w-[60%] mx-auto mt-6 lg:my-12 p-4 md:p-8 lg:p-12 rounded-md shadow-sm ">
-      <div className="text-black font-bold text-lg mg:text-2xl lg:text-5xl">Log In</div>
-      <Form {...form} >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-12">
+      <div className="text-black font-bold text-lg mg:text-2xl lg:text-5xl">
+        Log In
+      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 mt-12"
+        >
           <FormField
             control={form.control}
-            name="username"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="shadcn@gmail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
