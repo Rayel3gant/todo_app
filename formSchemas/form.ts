@@ -22,3 +22,8 @@ export const signupFormSchema = z.object({
     ),
   email: z.string().email("Invalid email format"),
 });
+
+export const todoFormSchema = z.object({
+  title: z.string().min(8, "Minimum 8 characters required"),
+  date: z.date(),
+});
