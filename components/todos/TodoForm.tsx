@@ -33,7 +33,6 @@ export const TodoForm = ({ userId }: TodoFormProps) => {
   });
   const [open, setOpen] = useState(false);
   async function onSubmit(values: z.infer<typeof todoFormSchema>) {
-    console.log(values);
     if (!userId) {
       return;
     }
@@ -42,7 +41,6 @@ export const TodoForm = ({ userId }: TodoFormProps) => {
       title: values.title,
       date: values.date.toISOString(),
     });
-    console.log("res", res);
   }
   return (
     <div>
