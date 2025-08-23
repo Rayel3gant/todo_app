@@ -21,3 +21,11 @@ export type updateTodoType = {
   status: "Completed" | "Pending";
   todoId: string;
 };
+
+export interface TodoResponse {
+  _id: string;
+  title: string;
+  status: "Pending" | "Completed";
+  date: string; // ISO date string
+  __v: number;
+}

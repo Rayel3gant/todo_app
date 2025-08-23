@@ -19,11 +19,13 @@ import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { useState } from "react";
 import { createTodoAction } from "@/actions/todos";
+import { QueryObserverResult } from "@tanstack/react-query";
 type TodoFormProps = {
   userId: string | null;
+  refetch: () => Promise<QueryObserverResult<any, unknown>>;
 };
 
-export const TodoForm = ({ userId }: TodoFormProps) => {
+export const TodoForm = ({ userId, refetch }: TodoFormProps) => {
   const form = useForm<z.infer<typeof todoFormSchema>>({
     resolver: zodResolver(todoFormSchema),
     defaultValues: {
@@ -41,6 +43,10 @@ export const TodoForm = ({ userId }: TodoFormProps) => {
       title: values.title,
       date: values.date.toISOString(),
     });
+    if (res.status === 201) {
+      refetch();
+      form.reset();
+    }
   }
   return (
     <div>
@@ -66,7 +72,6 @@ export const TodoForm = ({ userId }: TodoFormProps) => {
               <FormItem>
                 <FormLabel>Date & Time</FormLabel>
                 <div className="flex gap-4">
-                  {/* Date picker */}
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -88,7 +93,6 @@ export const TodoForm = ({ userId }: TodoFormProps) => {
                         selected={field.value}
                         onSelect={(selectedDate) => {
                           if (!selectedDate) return;
-                          // preserve time if user already picked one
                           const merged = new Date(field.value || new Date());
                           merged.setFullYear(
                             selectedDate.getFullYear(),

@@ -4,7 +4,7 @@ import { Todo } from "@/schemas/Todo";
 import { User } from "@/schemas/User";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (request: NextRequest, response: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
     const body: createTodoType = await request.json();
@@ -41,7 +41,7 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
   }
 };
 
-export const DELETE = async (request: NextRequest, response: NextResponse) => {
+export const DELETE = async (request: NextRequest) => {
   try {
     await dbConnect();
     const body: deleteTodoType = await request.json();
@@ -74,32 +74,7 @@ export const DELETE = async (request: NextRequest, response: NextResponse) => {
   }
 };
 
-export const GET = async (request: NextRequest, response: NextResponse) => {
-  try {
-    await dbConnect();
-    const userId = await request.json();
-    if (!userId) {
-      return NextResponse.json(
-        { error: " user id is required" },
-        { status: 400 }
-      );
-    }
-
-    const userTodos = await User.findById(userId).populate("todos").exec();
-    const todos = userTodos.todos;
-    return NextResponse.json(
-      { message: "Login successful", todos },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Server error", error },
-      { status: 500 }
-    );
-  }
-};
-
-export const UPDATE = async (request: NextRequest, response: NextResponse) => {
+export const PUT = async (request: NextRequest) => {
   try {
     await dbConnect();
     const body: updateTodoType = await request.json();

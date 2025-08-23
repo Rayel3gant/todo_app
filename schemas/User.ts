@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { Todo } from "./Todo";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -21,7 +22,7 @@ const userSchema = new mongoose.Schema({
   todos: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Todo",
+      ref: Todo,
     },
   ],
 });

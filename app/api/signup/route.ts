@@ -4,7 +4,7 @@ import { User } from "@/schemas/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
-export const POST = async (request: NextRequest, response: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
     const body: signupType = await request.json();
